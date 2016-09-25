@@ -49,20 +49,29 @@ sub permute_named {
 
     my %args = @_;
 
-    my %h;
+    my @fields;
+    my @permute;
     for my $aos (@{$args{aoaos}}) {
         my $k = shift @$aos;
-        $h{$k} = $aos;
+        push @permute, $k, $aos;
+        push @fields, $k
     }
 
-    my $iter = Permute::Named::Iter->new(%h);
+    my $iter = Permute::Named::Iter::permute_named_iter(@permute);
     my @res;
     while (my $h = $iter->()) {
         push @res, $h;
     }
 
-    [200, "OK", \@res];
+    [200, "OK", \@res, {'table.fields'=>\@fields}];
 }
 
 1;
 #ABSTRACT:
+
+=head1 SEE ALSO
+
+L<Permute::Named>, L<Permute::Named::Iter>, L<PERLANCAR::Permute::Named>.
+
+L<Set::Product>, L<Set::CrossProduct> (see more similar modules in the POD of
+Set::Product) and CLI scripts <cross>, L<cross-pericmd>.
