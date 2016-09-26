@@ -44,6 +44,11 @@ _
         {
             argv => ['bool,0,1','x,foo,bar,baz'],
         },
+        {
+            src => '[[prog]] bool,0,1 x,foo,bar,baz --format json-pretty --naked-res',
+            src_plang => 'bash',
+            summary => 'Like previous example, but outputs JSON',
+        },
     ],
 };
 sub permute_named {
