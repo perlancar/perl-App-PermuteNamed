@@ -39,6 +39,11 @@ _
             pos => 0,
             greedy => 1,
         },
+        separator => {
+            summary => 'Separator character to use',
+            schema => 'str*',
+            cmdline_aliases => {s => {}},
+        },
     },
     examples => [
         {
@@ -55,6 +60,7 @@ sub permute_named {
     require Permute::Named::Iter;
 
     my %args = @_;
+    my $sep = $args{separator};
 
     my @fields;
     my @permute;
@@ -64,13 +70,22 @@ sub permute_named {
         push @fields, $k
     }
 
+    my $resmeta = {};
     my $iter = Permute::Named::Iter::permute_named_iter(@permute);
     my @res;
     while (my $h = $iter->()) {
-        push @res, $h;
+        if (defined $sep) {
+            push @res, join($sep, @{$h}{@fields});
+        } else {
+            push @res, $h;
+        }
     }
 
-    [200, "OK", \@res, {'table.fields'=>\@fields}];
+    unless (defined $sep) {
+        $resmeta->{'table.fields'} = \@fields;
+    }
+
+    [200, "OK", \@res, $resmeta];
 }
 
 1;
