@@ -1,6 +1,8 @@
 package App::PermuteNamed;
 
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 use 5.010001;
@@ -32,7 +34,7 @@ _
                 of => ['array*', {
                     min_len => 1,
                     of => 'str*',
-                    'x.perl.coerce_rules' => ['str_comma_sep']
+                    'x.perl.coerce_rules' => ['From_str::comma_sep']
                 }],
             }],
             req => 1,
