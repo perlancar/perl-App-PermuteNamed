@@ -46,6 +46,9 @@ _
             schema => 'str*',
             cmdline_aliases => {s => {}},
         },
+        exec => {
+            summary => 'Template',
+        },
     },
     examples => [
         {
@@ -55,6 +58,12 @@ _
             src => '[[prog]] bool,0,1 x,foo,bar,baz --format json-pretty --naked-res',
             src_plang => 'bash',
             summary => 'Like previous example, but outputs JSON',
+        },
+        {
+            summary => 'Execute some command',
+            src => q([[prog]] size,small,medium,large query,shirt,medal,car --exec 'image-query -q {query} -s {size}'),
+            test => 0,
+            'x.doc.show_result' => 0,
         },
     ],
 };
